@@ -3016,36 +3016,201 @@ window.addEventListener(
 
 /* =========================================================
    EXPERIMENTAL ANIMATION LAB
-   CINEMATIC INTERACTION SYSTEM — EXPERIMENT 02
+   MAXIMUM CINEMATIC MODE — EXPERIMENT 03
 
-   Temporary layer.
-   Delete this entire block to return to the stable version.
+   PURPOSE:
+   Heavy visual experimentation.
+   Performance is intentionally NOT optimized.
+
+   TO REVERT:
+   Delete this entire block.
 ========================================================= */
 
 (function () {
 
+  const reduceMotion =
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (reduceMotion) return;
+
+
   /* =======================================================
-     SETUP
+     01 — GLOBAL STATE
   ======================================================= */
+
+  let mouseX = window.innerWidth / 2;
+  let mouseY = window.innerHeight / 2;
+
+  let smoothMouseX = mouseX;
+  let smoothMouseY = mouseY;
+
+  let scrollY = window.scrollY;
+  let smoothScroll = scrollY;
+
+  let previousScroll = scrollY;
 
   const isTouch =
     window.matchMedia("(pointer: coarse)").matches;
 
-  const reduceMotion =
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  if (reduceMotion) {
-    return;
+  /* =======================================================
+     02 — CINEMATIC OVERLAY SYSTEM
+  ======================================================= */
+
+  const cinematicLayer =
+    document.createElement("div");
+
+  cinematicLayer.className =
+    "maximum-cinematic-layer";
+
+  document.body.appendChild(
+    cinematicLayer
+  );
+
+
+  /* =======================================================
+     03 — CURSOR CORE
+  ======================================================= */
+
+  let cursorCore = null;
+  let cursorRing = null;
+  let cursorGlow = null;
+
+  if (!isTouch) {
+
+    cursorCore =
+      document.createElement("div");
+
+    cursorCore.className =
+      "maximum-cursor-core";
+
+
+    cursorRing =
+      document.createElement("div");
+
+    cursorRing.className =
+      "maximum-cursor-ring";
+
+
+    cursorGlow =
+      document.createElement("div");
+
+    cursorGlow.className =
+      "maximum-cursor-glow";
+
+
+    document.body.appendChild(cursorGlow);
+    document.body.appendChild(cursorRing);
+    document.body.appendChild(cursorCore);
+
+
+    document.addEventListener(
+      "mousemove",
+      function (event) {
+
+        mouseX = event.clientX;
+        mouseY = event.clientY;
+
+      },
+      { passive: true }
+    );
+
   }
 
 
   /* =======================================================
-     CINEMATIC PHOTO WRAPPER
+     04 — MASSIVE PARTICLE FIELD
+  ======================================================= */
+
+  const particleContainer =
+    document.createElement("div");
+
+  particleContainer.className =
+    "maximum-particle-field";
+
+  document.body.appendChild(
+    particleContainer
+  );
+
+
+  const particleCount =
+    isTouch ? 22 : 55;
+
+
+  for (
+    let i = 0;
+    i < particleCount;
+    i++
+  ) {
+
+    const particle =
+      document.createElement("span");
+
+    particle.className =
+      "maximum-particle";
+
+    particle.style.setProperty(
+      "--particle-x",
+      Math.random() * 100 + "%"
+    );
+
+    particle.style.setProperty(
+      "--particle-y",
+      Math.random() * 100 + "%"
+    );
+
+    particle.style.setProperty(
+      "--particle-size",
+      (Math.random() * 3 + 1) + "px"
+    );
+
+    particle.style.setProperty(
+      "--particle-duration",
+      (Math.random() * 8 + 5) + "s"
+    );
+
+    particle.style.setProperty(
+      "--particle-delay",
+      (Math.random() * -10) + "s"
+    );
+
+    particleContainer.appendChild(
+      particle
+    );
+
+  }
+
+
+  /* =======================================================
+     05 — SECTION DISCOVERY
+  ======================================================= */
+
+  const sections =
+    document.querySelectorAll(
+      "section"
+    );
+
+
+  sections.forEach(function (section, index) {
+
+    section.style.setProperty(
+      "--cinematic-index",
+      index
+    );
+
+    section.style.willChange =
+      "transform, opacity";
+
+  });
+
+
+  /* =======================================================
+     06 — PHOTO SYSTEM
   ======================================================= */
 
   const photos =
     document.querySelectorAll(
-      ".photo-frame, .feature-image"
+      ".photo-frame"
     );
 
 
@@ -3055,103 +3220,324 @@ window.addEventListener(
       "preserve-3d";
 
     photo.style.willChange =
+      "transform, filter";
+
+    photo.style.transition =
+      "box-shadow .5s ease";
+
+  });
+
+
+  /* =======================================================
+     07 — FEATURE IMAGE SYSTEM
+  ======================================================= */
+
+  const featureImages =
+    document.querySelectorAll(
+      ".feature-image"
+    );
+
+
+  featureImages.forEach(function (feature) {
+
+    feature.style.transformStyle =
+      "preserve-3d";
+
+    feature.style.willChange =
       "transform";
 
   });
 
 
   /* =======================================================
-     SCROLL CINEMA ENGINE
+     08 — IMAGE WRAPPER DEPTH
   ======================================================= */
 
-  let scrollTicking = false;
+  document
+    .querySelectorAll(
+      ".photo-frame-inner, .feature-image"
+    )
+    .forEach(function (element) {
 
-  function cinematicScroll() {
+      element.style.transformStyle =
+        "preserve-3d";
 
-    const viewport =
-      window.innerHeight;
+    });
+
+
+  /* =======================================================
+     09 — MOUSE TRACKING
+  ======================================================= */
+
+  function updateMouse() {
+
+    smoothMouseX +=
+      (mouseX - smoothMouseX) * .12;
+
+    smoothMouseY +=
+      (mouseY - smoothMouseY) * .12;
+
+
+    if (cursorCore) {
+
+      cursorCore.style.transform =
+        "translate3d(" +
+        smoothMouseX +
+        "px," +
+        smoothMouseY +
+        "px,0)";
+
+    }
+
+
+    if (cursorRing) {
+
+      cursorRing.style.transform =
+        "translate3d(" +
+        smoothMouseX +
+        "px," +
+        smoothMouseY +
+        "px,0)";
+
+    }
+
+
+    if (cursorGlow) {
+
+      cursorGlow.style.transform =
+        "translate3d(" +
+        smoothMouseX +
+        "px," +
+        smoothMouseY +
+        "px,0)";
+
+    }
+
+  }
+
+
+  /* =======================================================
+     10 — SCROLL ENGINE
+  ======================================================= */
+
+  function updateScroll() {
+
+    scrollY =
+      window.scrollY;
+
+    smoothScroll +=
+      (scrollY - smoothScroll) * .085;
+
+
+    const scrollVelocity =
+      scrollY - previousScroll;
+
+    previousScroll =
+      scrollY;
+
+
+    /* -----------------------------------------------
+       PHOTOS
+    ----------------------------------------------- */
 
     photos.forEach(function (photo) {
 
       const rect =
         photo.getBoundingClientRect();
 
-      if (
-        rect.bottom < -100 ||
-        rect.top > viewport + 100
-      ) {
-        return;
-      }
-
-
       const center =
-        rect.top + rect.height / 2;
+        rect.top +
+        rect.height / 2;
+
+      const viewportCenter =
+        window.innerHeight / 2;
 
       const distance =
-        center - viewport / 2;
+        center -
+        viewportCenter;
 
-      const progress =
+      const normalized =
         Math.max(
           -1,
           Math.min(
             1,
-            distance / viewport
+            distance /
+            window.innerHeight
           )
         );
 
 
-      const parallax =
-        progress * -28;
+      const depth =
+        normalized * -75;
 
       const scale =
         1 +
-        (1 - Math.abs(progress)) * .025;
+        (1 - Math.abs(normalized)) * .085;
 
-      const rotate =
-        progress * -0.8;
+      const rotation =
+        normalized * -4;
 
 
       photo.style.transform =
         "translate3d(" +
-        "var(--mouse-x, 0px), " +
-        parallax +
-        "px, 0) " +
+        "0," +
+        depth +
+        "px," +
+        "0) " +
         "scale(" +
         scale +
         ") " +
         "rotateX(" +
-        rotate +
+        rotation +
         "deg)";
+
+
+      photo.style.filter =
+        "brightness(" +
+        (
+          1.01 -
+          Math.abs(normalized) * .08
+        ) +
+        ")";
 
     });
 
 
-    scrollTicking = false;
+    /* -----------------------------------------------
+       FEATURE IMAGE
+    ----------------------------------------------- */
+
+    featureImages.forEach(function (feature) {
+
+      const rect =
+        feature.getBoundingClientRect();
+
+      const center =
+        rect.top +
+        rect.height / 2;
+
+      const normalized =
+        (
+          center -
+          window.innerHeight / 2
+        ) /
+        window.innerHeight;
+
+
+      const limited =
+        Math.max(
+          -1,
+          Math.min(
+            1,
+            normalized
+          )
+        );
+
+
+      feature.style.transform =
+        "translate3d(0," +
+        limited * -55 +
+        "px,0) " +
+        "scale(" +
+        (
+          1 +
+          (1 - Math.abs(limited)) * .045
+        ) +
+        ")";
+
+    });
+
+
+    /* -----------------------------------------------
+       SECTIONS
+    ----------------------------------------------- */
+
+    sections.forEach(function (section) {
+
+      const rect =
+        section.getBoundingClientRect();
+
+      const progress =
+        (
+          window.innerHeight -
+          rect.top
+        ) /
+        (
+          window.innerHeight +
+          rect.height
+        );
+
+
+      const clamped =
+        Math.max(
+          0,
+          Math.min(
+            1,
+            progress
+          )
+        );
+
+
+      const distanceFromCenter =
+        (
+          rect.top +
+          rect.height / 2 -
+          window.innerHeight / 2
+        ) /
+        window.innerHeight;
+
+
+      const limited =
+        Math.max(
+          -1,
+          Math.min(
+            1,
+            distanceFromCenter
+          )
+        );
+
+
+      section.style.setProperty(
+        "--section-depth",
+        limited * -22 + "px"
+      );
+
+    });
+
+
+    /* -----------------------------------------------
+       PARTICLE PARALLAX
+    ----------------------------------------------- */
+
+    particleContainer.style.transform =
+      "translate3d(" +
+      (smoothMouseX - window.innerWidth / 2) * -.018 +
+      "px," +
+      (smoothScroll * -.035) +
+      "px,0)";
+
+
+    /* -----------------------------------------------
+       CURSOR ROTATION
+    ----------------------------------------------- */
+
+    if (cursorRing) {
+
+      cursorRing.style.setProperty(
+        "--cursor-velocity",
+        Math.min(
+          12,
+          Math.abs(scrollVelocity) * .35
+        ) + "deg"
+      );
+
+    }
 
   }
 
 
-  window.addEventListener(
-    "scroll",
-    function () {
-
-      if (!scrollTicking) {
-
-        requestAnimationFrame(
-          cinematicScroll
-        );
-
-        scrollTicking = true;
-
-      }
-
-    },
-    { passive: true }
-  );
-
-
   /* =======================================================
-     3D MOUSE PHOTOGRAPHY
+     11 — 3D MOUSE PHOTO TILT
   ======================================================= */
 
   if (!isTouch) {
@@ -3159,13 +3545,6 @@ window.addEventListener(
     document.addEventListener(
       "mousemove",
       function (event) {
-
-        const pointerX =
-          (event.clientX / window.innerWidth) - .5;
-
-        const pointerY =
-          (event.clientY / window.innerHeight) - .5;
-
 
         photos.forEach(function (photo) {
 
@@ -3181,47 +3560,36 @@ window.addEventListener(
           }
 
 
-          const localX =
-            event.clientX -
-            rect.left;
+          const px =
+            (
+              event.clientX -
+              rect.left
+            ) /
+            rect.width;
 
-          const localY =
-            event.clientY -
-            rect.top;
+
+          const py =
+            (
+              event.clientY -
+              rect.top
+            ) /
+            rect.height;
 
 
           const rotateY =
-            (localX / rect.width - .5) * 5;
+            (px - .5) * 12;
 
           const rotateX =
-            (localY / rect.height - .5) * -5;
-
-
-          const moveX =
-            pointerX * 9;
-
-          const moveY =
-            pointerY * 6;
+            (py - .5) * -12;
 
 
           photo.style.setProperty(
-            "--mouse-x",
-            moveX + "px"
-          );
-
-          photo.style.setProperty(
-            "--mouse-y",
-            moveY + "px"
-          );
-
-
-          photo.style.setProperty(
-            "--rotate-x",
+            "--mouse-rotate-x",
             rotateX + "deg"
           );
 
           photo.style.setProperty(
-            "--rotate-y",
+            "--mouse-rotate-y",
             rotateY + "deg"
           );
 
@@ -3231,108 +3599,29 @@ window.addEventListener(
       { passive: true }
     );
 
-
-    photos.forEach(function (photo) {
-
-      photo.addEventListener(
-        "mouseenter",
-        function () {
-
-          photo.style.transition =
-            "transform .7s cubic-bezier(.2,.8,.2,1), " +
-            "box-shadow .7s ease";
-
-          photo.style.boxShadow =
-            "0 30px 80px rgba(0,0,0,.45), " +
-            "0 0 45px rgba(216,201,168,.09)";
-
-        }
-      );
-
-
-      photo.addEventListener(
-        "mouseleave",
-        function () {
-
-          photo.style.transition =
-            "transform 1.1s cubic-bezier(.2,.7,.2,1), " +
-            "box-shadow .7s ease";
-
-          photo.style.boxShadow =
-            "";
-
-          photo.style.setProperty(
-            "--rotate-x",
-            "0deg"
-          );
-
-          photo.style.setProperty(
-            "--rotate-y",
-            "0deg"
-          );
-
-        }
-      );
-
-    });
-
   }
 
 
   /* =======================================================
-     CURSOR SPOTLIGHT
+     12 — MAGNETIC INTERFACE
   ======================================================= */
 
   if (!isTouch) {
 
-    const spotlight =
-      document.createElement("div");
-
-    spotlight.className =
-      "experimental-spotlight";
-
-    document.body.appendChild(
-      spotlight
-    );
-
-
-    document.addEventListener(
-      "mousemove",
-      function (event) {
-
-        spotlight.style.left =
-          event.clientX + "px";
-
-        spotlight.style.top =
-          event.clientY + "px";
-
-      },
-      { passive: true }
-    );
-
-  }
-
-
-  /* =======================================================
-     MAGNETIC NAVIGATION
-  ======================================================= */
-
-  if (!isTouch) {
-
-    const magneticItems =
+    const magneticElements =
       document.querySelectorAll(
-        ".nav a, .menu-toggle, button"
+        ".nav a, .menu-toggle, button, .hero a, .about a"
       );
 
 
-    magneticItems.forEach(function (item) {
+    magneticElements.forEach(function (element) {
 
-      item.addEventListener(
+      element.addEventListener(
         "mousemove",
         function (event) {
 
           const rect =
-            item.getBoundingClientRect();
+            element.getBoundingClientRect();
 
           const x =
             event.clientX -
@@ -3345,23 +3634,24 @@ window.addEventListener(
             rect.height / 2;
 
 
-          item.style.transform =
-            "translate(" +
-            x * .12 +
-            "px, " +
-            y * .12 +
-            "px)";
+          element.style.transform =
+            "translate3d(" +
+            x * .28 +
+            "px," +
+            y * .28 +
+            "px,0) " +
+            "scale(1.06)";
 
         }
       );
 
 
-      item.addEventListener(
+      element.addEventListener(
         "mouseleave",
         function () {
 
-          item.style.transform =
-            "translate(0,0)";
+          element.style.transform =
+            "translate3d(0,0,0) scale(1)";
 
         }
       );
@@ -3372,31 +3662,104 @@ window.addEventListener(
 
 
   /* =======================================================
-     REVEAL MASKS
+     13 — HORIZONTAL CINEMATIC SWEEP
   ======================================================= */
 
-  const revealItems =
+  const sweep =
+    document.createElement("div");
+
+  sweep.className =
+    "maximum-horizontal-sweep";
+
+  document.body.appendChild(
+    sweep
+  );
+
+
+  /* =======================================================
+     14 — SCROLL VELOCITY FLASH
+  ======================================================= */
+
+  const velocityFlash =
+    document.createElement("div");
+
+  velocityFlash.className =
+    "maximum-velocity-flash";
+
+  document.body.appendChild(
+    velocityFlash
+  );
+
+
+  let flashTimeout;
+
+
+  window.addEventListener(
+    "scroll",
+    function () {
+
+      velocityFlash.style.opacity =
+        Math.min(
+          .16,
+          Math.abs(
+            window.scrollY -
+            previousScroll
+          ) * .004
+        );
+
+
+      clearTimeout(
+        flashTimeout
+      );
+
+
+      flashTimeout =
+        setTimeout(function () {
+
+          velocityFlash.style.opacity =
+            "0";
+
+        }, 100);
+
+    },
+    { passive: true }
+  );
+
+
+  /* =======================================================
+     15 — REVEAL SYSTEM
+  ======================================================= */
+
+  const revealElements =
     document.querySelectorAll(
       ".reveal"
     );
 
 
-  revealItems.forEach(function (element) {
+  revealElements.forEach(function (element) {
 
-    element.style.willChange =
-      "transform, opacity, clip-path";
+    element.style.opacity =
+      "0";
+
+    element.style.transform =
+      "translate3d(0,90px,0) scale(.94)";
+
+    element.style.clipPath =
+      "inset(0 0 25% 0)";
 
     element.style.transition =
-      "opacity 1.1s cubic-bezier(.2,.7,.2,1), " +
-      "transform 1.2s cubic-bezier(.2,.7,.2,1), " +
-      "clip-path 1.3s cubic-bezier(.77,0,.18,1)";
+      "opacity 1.2s cubic-bezier(.16,1,.3,1), " +
+      "transform 1.4s cubic-bezier(.16,1,.3,1), " +
+      "clip-path 1.5s cubic-bezier(.77,0,.18,1)";
 
   });
 
 
-  if ("IntersectionObserver" in window) {
+  if (
+    "IntersectionObserver" in window
+  ) {
 
-    const cinematicObserver =
+    const revealObserver =
       new IntersectionObserver(
         function (entries) {
 
@@ -3406,14 +3769,18 @@ window.addEventListener(
               entry.isIntersecting
             ) {
 
-              entry.target.style.clipPath =
-                "inset(0 0 0 0)";
-
               entry.target.style.opacity =
                 "1";
 
               entry.target.style.transform =
-                "translate3d(0,0,0)";
+                "translate3d(0,0,0) scale(1)";
+
+              entry.target.style.clipPath =
+                "inset(0 0 0 0)";
+
+              revealObserver.unobserve(
+                entry.target
+              );
 
             }
 
@@ -3421,19 +3788,16 @@ window.addEventListener(
 
         },
         {
-          threshold: .05,
+          threshold: .01,
           rootMargin:
-            "0px 0px -8% 0px"
+            "0px 0px -5% 0px"
         }
       );
 
 
-    revealItems.forEach(function (element) {
+    revealElements.forEach(function (element) {
 
-      element.style.clipPath =
-        "inset(0 0 18% 0)";
-
-      cinematicObserver.observe(
+      revealObserver.observe(
         element
       );
 
@@ -3443,112 +3807,288 @@ window.addEventListener(
 
 
   /* =======================================================
-     DYNAMIC LIGHT TRACE
+     16 — PHOTO LIGHT BEAMS
   ======================================================= */
 
-  const frames =
-    document.querySelectorAll(
-      ".photo-frame"
+  photos.forEach(function (photo) {
+
+    const beam =
+      document.createElement("span");
+
+    beam.className =
+      "maximum-photo-beam";
+
+    photo.appendChild(
+      beam
     );
 
 
-  frames.forEach(function (frame) {
-
-    const light =
+    const beam2 =
       document.createElement("span");
 
-    light.className =
-      "experimental-light-trace";
+    beam2.className =
+      "maximum-photo-beam beam-two";
 
-    frame.appendChild(
-      light
+    photo.appendChild(
+      beam2
     );
 
   });
 
 
   /* =======================================================
-     EXPERIMENTAL CSS
+     17 — IMAGE HOVER ENERGY
   ======================================================= */
 
-  const style =
+  if (!isTouch) {
+
+    photos.forEach(function (photo) {
+
+      photo.addEventListener(
+        "mouseenter",
+        function () {
+
+          photo.classList.add(
+            "maximum-photo-active"
+          );
+
+        }
+      );
+
+
+      photo.addEventListener(
+        "mouseleave",
+        function () {
+
+          photo.classList.remove(
+            "maximum-photo-active"
+          );
+
+        }
+      );
+
+    });
+
+  }
+
+
+  /* =======================================================
+     18 — ANIMATION LOOP
+  ======================================================= */
+
+  function animationLoop() {
+
+    updateMouse();
+    updateScroll();
+
+    requestAnimationFrame(
+      animationLoop
+    );
+
+  }
+
+
+  /* =======================================================
+     19 — MAXIMUM CINEMATIC CSS
+  ======================================================= */
+
+  const maximumStyle =
     document.createElement("style");
 
 
-  style.textContent = `
+  maximumStyle.textContent = `
 
-    /* -----------------------------------------------
-       GLOBAL CINEMATIC FEEL
-    ----------------------------------------------- */
+    /* =====================================================
+       MASTER LAYER
+    ===================================================== */
 
-    .photo-frame,
-    .feature-image {
-
-      perspective: 1200px;
-
-      transform-style: preserve-3d;
-
-      backface-visibility: hidden;
-
-    }
-
-
-    /* -----------------------------------------------
-       PHOTO DEPTH
-    ----------------------------------------------- */
-
-    .photo-frame img,
-    .feature-image img {
-
-      transition:
-        transform 1.2s cubic-bezier(.2,.7,.2,1),
-        filter 1s ease;
-
-      will-change:
-        transform,
-        filter;
-
-    }
-
-
-    .photo-frame:hover img {
-
-      transform:
-        scale(1.055)
-        translateZ(18px);
-
-      filter:
-        brightness(1.08)
-        contrast(1.03);
-
-    }
-
-
-    /* -----------------------------------------------
-       CURSOR SPOTLIGHT
-    ----------------------------------------------- */
-
-    .experimental-spotlight {
+    .maximum-cinematic-layer {
 
       position: fixed;
 
-      z-index: 9997;
-
-      width: 420px;
-      height: 420px;
-
-      margin-left: -210px;
-      margin-top: -210px;
+      inset: 0;
 
       pointer-events: none;
+
+      z-index: 9990;
+
+      overflow: hidden;
+
+    }
+
+
+    /* =====================================================
+       CURSOR CORE
+    ===================================================== */
+
+    .maximum-cursor-core {
+
+      position: fixed;
+
+      top: 0;
+      left: 0;
+
+      width: 8px;
+      height: 8px;
+
+      margin-left: -4px;
+      margin-top: -4px;
 
       border-radius: 50%;
 
       background:
+        rgba(238,234,226,.95);
+
+      pointer-events: none;
+
+      z-index: 10001;
+
+      mix-blend-mode: difference;
+
+      box-shadow:
+        0 0 12px rgba(238,234,226,.8),
+        0 0 30px rgba(216,201,168,.5);
+
+      will-change:
+        transform;
+
+    }
+
+
+    /* =====================================================
+       CURSOR RING
+    ===================================================== */
+
+    .maximum-cursor-ring {
+
+      position: fixed;
+
+      top: 0;
+      left: 0;
+
+      width: 52px;
+      height: 52px;
+
+      margin-left: -26px;
+      margin-top: -26px;
+
+      border:
+        1px solid
+        rgba(216,201,168,.55);
+
+      border-radius: 50%;
+
+      pointer-events: none;
+
+      z-index: 10000;
+
+      mix-blend-mode:
+        difference;
+
+      will-change:
+        transform;
+
+      animation:
+        cursorSpin
+        5s
+        linear
+        infinite;
+
+    }
+
+
+    .maximum-cursor-ring::before,
+    .maximum-cursor-ring::after {
+
+      content: "";
+
+      position: absolute;
+
+      inset: -9px;
+
+      border-radius: 50%;
+
+      border:
+        1px solid
+        rgba(216,201,168,.12);
+
+      animation:
+        cursorPulse
+        2.4s
+        ease-in-out
+        infinite;
+
+    }
+
+
+    .maximum-cursor-ring::after {
+
+      inset: -18px;
+
+      opacity: .45;
+
+      animation-delay:
+        -.8s;
+
+    }
+
+
+    @keyframes cursorSpin {
+
+      from {
+        rotate: 0deg;
+      }
+
+      to {
+        rotate: 360deg;
+      }
+
+    }
+
+
+    @keyframes cursorPulse {
+
+      0%,100% {
+        transform: scale(.8);
+        opacity: .1;
+      }
+
+      50% {
+        transform: scale(1.15);
+        opacity: .55;
+      }
+
+    }
+
+
+    /* =====================================================
+       CURSOR GLOW
+    ===================================================== */
+
+    .maximum-cursor-glow {
+
+      position: fixed;
+
+      top: 0;
+      left: 0;
+
+      width: 500px;
+      height: 500px;
+
+      margin-left: -250px;
+      margin-top: -250px;
+
+      border-radius: 50%;
+
+      pointer-events: none;
+
+      z-index: 9996;
+
+      background:
         radial-gradient(
           circle,
-          rgba(216,201,168,.075) 0%,
-          rgba(216,201,168,.035) 18%,
+          rgba(216,201,168,.11),
+          rgba(216,201,168,.045) 22%,
           transparent 68%
         );
 
@@ -3558,166 +4098,74 @@ window.addEventListener(
       mix-blend-mode:
         screen;
 
-      transform:
-        translate3d(0,0,0);
-
-      transition:
-        left .08s linear,
-        top .08s linear;
-
-    }
-
-
-    /* -----------------------------------------------
-       MOVING LIGHT TRACE
-    ----------------------------------------------- */
-
-    .experimental-light-trace {
-
-      position: absolute;
-
-      z-index: 8;
-
-      top: 0;
-      left: -35%;
-
-      width: 25%;
-      height: 100%;
-
-      pointer-events: none;
-
-      background:
-        linear-gradient(
-          90deg,
-          transparent,
-          rgba(216,201,168,.22),
-          transparent
-        );
-
-      filter:
-        blur(1px);
-
-      transform:
-        skewX(-18deg);
-
-      opacity:
-        .55;
-
-      animation:
-        experimentalLightSweep
-        4.5s
-        cubic-bezier(.4,0,.2,1)
-        infinite;
-
-    }
-
-
-    @keyframes experimentalLightSweep {
-
-      0% {
-        left: -35%;
-        opacity: 0;
-      }
-
-      15% {
-        opacity: .55;
-      }
-
-      55% {
-        opacity: .35;
-      }
-
-      100% {
-        left: 125%;
-        opacity: 0;
-      }
-
-    }
-
-
-    /* -----------------------------------------------
-       CINEMATIC REVEAL
-    ----------------------------------------------- */
-
-    .reveal {
-
-      transform:
-        translate3d(0,45px,0);
-
-      opacity:
-        .01;
-
-    }
-
-
-    /* -----------------------------------------------
-       MAGNETIC ELEMENTS
-    ----------------------------------------------- */
-
-    .nav a,
-    .menu-toggle,
-    button {
-
-      transition:
-        transform .35s cubic-bezier(.2,.8,.2,1),
-        opacity .3s ease;
-
       will-change:
         transform;
 
     }
 
 
-    /* -----------------------------------------------
-       FEATURE IMAGE DEPTH
-    ----------------------------------------------- */
+    /* =====================================================
+       PARTICLES
+    ===================================================== */
 
-    .feature-image:hover img {
+    .maximum-particle-field {
 
-      transform:
-        scale(1.035);
+      position: fixed;
 
-      filter:
-        brightness(1.06);
+      inset: 0;
+
+      z-index: 9991;
+
+      pointer-events: none;
+
+      overflow: hidden;
+
+      transition:
+        transform .2s linear;
+
+    }
+
+
+    .maximum-particle {
+
+      position: absolute;
+
+      left:
+        var(--particle-x);
+
+      top:
+        var(--particle-y);
+
+      width:
+        var(--particle-size);
+
+      height:
+        var(--particle-size);
+
+      border-radius: 50%;
+
+      background:
+        rgba(238,234,226,.7);
+
+      box-shadow:
+        0 0 8px
+        rgba(216,201,168,.45);
+
+      animation:
+        particleFloat
+        var(--particle-duration)
+        ease-in-out
+        var(--particle-delay)
+        infinite alternate;
 
     }
 
 
-    /* -----------------------------------------------
-       SMOOTH GPU COMPOSITING
-    ----------------------------------------------- */
+    @keyframes particleFloat {
 
-    .photo-frame,
-    .feature-image,
-    .photo-frame img,
-    .feature-image img {
-
-      -webkit-transform-style:
-        preserve-3d;
-
-    }
-
-  `;
-
-
-  document.head.appendChild(
-    style
-  );
-
-
-  /* =======================================================
-     INITIALIZE
-  ======================================================= */
-
-  cinematicScroll();
-
-})();
-
-
-/* =========================================================
-   END EXPERIMENTAL ANIMATION LAB
-========================================================= */
-
+      0% {
+        transform:
+         
 
 /* =========================================================
    IMAGE ERROR HANDLING
