@@ -180,7 +180,6 @@ button {
 }
 
 
-
 /* =========================================================
    NAVIGATION
 ========================================================= */
@@ -821,6 +820,8 @@ button {
 
   filter: brightness(1.05);
 }
+
+
 /* =========================================================
    SLIDESHOW
 ========================================================= */
@@ -893,6 +894,311 @@ button {
   text-transform: uppercase;
 
   color: var(--dim);
+}
+
+
+/* =========================================================
+   RAILWAY AFTER DARK
+========================================================= */
+
+.railway-section {
+  width: 100%;
+  margin: -50px 0 0;
+  padding: 0 0 160px;
+}
+
+.railway-heading {
+  width: min(var(--max), 90vw);
+  margin: 0 auto 35px;
+}
+
+.railway-heading .section-number {
+  margin-bottom: 20px;
+}
+
+.railway-title {
+  font-size: clamp(48px, 9vw, 120px);
+  line-height: .82;
+  letter-spacing: -.07em;
+  font-weight: 500;
+}
+
+.railway-title em {
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.railway-card {
+  position: relative;
+
+  width: min(var(--max), 90vw);
+  min-height: 560px;
+
+  margin: 0 auto;
+
+  overflow: hidden;
+
+  border: 1px solid rgba(238,234,226,.14);
+
+  background: #080808;
+
+  box-shadow:
+    0 0 0 1px rgba(216,201,168,.025),
+    0 0 55px rgba(216,201,168,.06);
+
+  isolation: isolate;
+}
+
+.railway-image {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  object-position: center;
+
+  transform: scale(1.015);
+
+  transition:
+    transform 1.4s cubic-bezier(.2,.7,.2,1),
+    filter 1s ease;
+}
+
+.railway-card:hover .railway-image {
+  transform: scale(1.045);
+  filter: brightness(1.04);
+}
+
+.railway-overlay {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 1;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(13,13,12,.96) 0%,
+      rgba(13,13,12,.78) 28%,
+      rgba(13,13,12,.38) 55%,
+      rgba(13,13,12,.10) 100%
+    );
+}
+
+.railway-card::after {
+  content: "";
+
+  position: absolute;
+
+  z-index: 2;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      120deg,
+      transparent 25%,
+      rgba(216,201,168,.08) 50%,
+      transparent 75%
+    );
+
+  transform: translateX(-120%);
+
+  animation: railwayLightSweep 8s ease-in-out infinite;
+}
+
+.railway-info {
+  position: relative;
+
+  z-index: 3;
+
+  min-height: 560px;
+
+  padding: 36px 42px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: space-between;
+}
+
+.railway-top {
+  display: flex;
+
+  justify-content: space-between;
+
+  font-family: "DM Mono", monospace;
+
+  font-size: 9px;
+
+  letter-spacing: .25em;
+
+  text-transform: uppercase;
+
+  color: #aaa69e;
+}
+
+.railway-text {
+  max-width: 600px;
+}
+
+.railway-label {
+  margin-bottom: 14px;
+
+  font-family: "DM Mono", monospace;
+
+  font-size: 9px;
+
+  letter-spacing: .28em;
+
+  text-transform: uppercase;
+
+  color: #aaa69e;
+}
+
+.railway-text h2 {
+  margin-bottom: 22px;
+
+  font-family: "Playfair Display", serif;
+
+  font-size: clamp(52px, 8vw, 105px);
+
+  line-height: .84;
+
+  letter-spacing: -.055em;
+
+  font-weight: 400;
+}
+
+.railway-text h2 em {
+  font-weight: 400;
+}
+
+.railway-description {
+  max-width: 440px;
+
+  margin-bottom: 28px;
+
+  font-size: 14px;
+
+  line-height: 1.75;
+
+  color: rgba(238,234,226,.68);
+}
+
+.railway-button {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 22px;
+
+  padding: 13px 20px;
+
+  border: 1px solid rgba(238,234,226,.35);
+
+  font-family: "DM Mono", monospace;
+
+  font-size: 10px;
+
+  letter-spacing: .18em;
+
+  text-transform: uppercase;
+
+  transition:
+    background .35s ease,
+    border-color .35s ease,
+    transform .35s ease;
+}
+
+.railway-button:hover {
+  background: rgba(238,234,226,.08);
+
+  border-color: rgba(238,234,226,.7);
+
+  transform: translateY(-2px);
+}
+
+@keyframes railwayLightSweep {
+
+  0% {
+    transform: translateX(-120%);
+  }
+
+  55% {
+    transform: translateX(-120%);
+  }
+
+  75% {
+    transform: translateX(120%);
+  }
+
+  100% {
+    transform: translateX(120%);
+  }
+
+}
+
+@media (max-width: 700px) {
+
+  .railway-section {
+    margin-top: -20px;
+    padding-bottom: 100px;
+  }
+
+  .railway-heading {
+    margin-bottom: 25px;
+  }
+
+  .railway-title {
+    font-size: clamp(46px, 14vw, 70px);
+  }
+
+  .railway-card {
+    min-height: 560px;
+  }
+
+  .railway-image {
+    object-position: center;
+  }
+
+  .railway-overlay {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(13,13,12,.12) 0%,
+        rgba(13,13,12,.30) 30%,
+        rgba(13,13,12,.82) 65%,
+        rgba(13,13,12,.98) 100%
+      );
+  }
+
+  .railway-info {
+    min-height: 560px;
+    padding: 24px;
+  }
+
+  .railway-top {
+    font-size: 8px;
+  }
+
+  .railway-text h2 {
+    font-size: clamp(50px, 15vw, 72px);
+  }
+
+  .railway-description {
+    font-size: 13px;
+  }
+
 }
 
 
@@ -1084,6 +1390,7 @@ button {
     transform 1.5s cubic-bezier(.2,.7,.2,1),
     filter 1s ease;
 }
+
 .feature-frame:hover .feature-image img {
   transform: scale(1.025);
 
@@ -1423,11 +1730,15 @@ footer {
 
 .reveal {
   opacity: 1;
-  transform: translateY(0) scale(1);
+
+  transform:
+    translateY(0)
+    scale(1);
+
   clip-path: inset(0 0 0 0);
 
   transition:
-    opacity 0.9s cubic-bezier(.2,.7,.2,1),
+    opacity .9s cubic-bezier(.2,.7,.2,1),
     transform 1s cubic-bezier(.2,.7,.2,1),
     clip-path 1s cubic-bezier(.2,.7,.2,1);
 }
@@ -1452,9 +1763,6 @@ footer {
   clip-path: inset(0 0 0 0);
 }
 
-
-/* Slightly stronger effect on desktop */
-
 @media (min-width: 701px) {
 
   .reveal.scroll-hidden {
@@ -1465,9 +1773,6 @@ footer {
 
 }
 
-
-/* Mobile */
-
 @media (max-width: 700px) {
 
   .reveal.scroll-hidden {
@@ -1477,7 +1782,8 @@ footer {
   }
 
 }
-  
+
+
 /* =========================================================
    MOBILE
 ========================================================= */
@@ -2217,45 +2523,90 @@ setTimeout(function () {
 </section>
 
 
-<!-- ============================= -->
-<!-- RAILWAY AFTER DARK -->
-<!-- ============================= -->
+<!-- =========================================================
+     RAILWAY AFTER DARK
+========================================================= -->
 
-<section class="railway-section reveal">
+<section class="railway-section">
 
-  <div class="section-heading">
-    <span class="section-number">08</span>
-    <div>
-      
-      <h2>RAILWAY AFTER DARK</h2>
+  <div class="railway-heading">
+
+    <div class="section-number">
+      08 / Indian Railways
     </div>
+
+    <h2 class="railway-title">
+      Railway <em>After Dark.</em>
+    </h2>
+
   </div>
+
 
   <div class="railway-card">
 
-    <div class="railway-content">
-      <p class="railway-label">INDIAN RAILWAYS</p>
+    <img
+      src="Photography/IMG_20251224_013237.jpg"
+      alt="Railway After Dark — Indian Railways photography by Ashu"
+      class="railway-image"
+    >
 
-      <h3>Railway After Dark</h3>
 
-      <p>
-        A personal collection of Indian Railways photographs,
-        captured by Ashu after dark.
-      </p>
+    <div class="railway-overlay"></div>
 
-      <a
-        href="https://photos.app.goo.gl/Q3Nys9Rprad6GDQdA"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="railway-button"
-      >
-        VIEW ALBUM ↗
-      </a>
+
+    <div class="railway-info">
+
+      <div class="railway-top">
+
+        <span>
+          08
+        </span>
+
+        <span>
+          INDIAN RAILWAYS
+        </span>
+
+      </div>
+
+
+      <div class="railway-text">
+
+        <p class="railway-label">
+          NIGHT COLLECTION
+        </p>
+
+
+        <h2>
+          Railway<br>
+          <em>After Dark.</em>
+        </h2>
+
+
+        <p class="railway-description">
+
+          A personal collection of Indian Railways
+          photographs, captured by Ashu after dark.
+
+        </p>
+
+
+        <a
+          href="https://photos.app.goo.gl/Q3Nys9Rprad6GDQdA"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="railway-button"
+        >
+          VIEW ALBUM ↗
+        </a>
+
+      </div>
+
     </div>
 
   </div>
 
 </section>
+
 
 <!-- =========================================================
      CERTIFICATES
@@ -2676,6 +3027,7 @@ setTimeout(function () {
 ========================================================= -->
 
 <script>
+
 /* =========================================================
    SCROLL EFFECT
 ========================================================= */
@@ -2923,8 +3275,6 @@ window.addEventListener(
 );
 
 
-
-  
 /* =========================================================
    IMAGE ERROR HANDLING
 ========================================================= */
@@ -2945,144 +3295,7 @@ document
 
   });
 
-
-</script>
-<script>
-
-/* =========================================================
-   YOUR EXISTING JAVASCRIPT
-========================================================= */
-
-/* Custom Cursor */
-/* Scroll Effect */
-/* Slideshow */
-/* Hero Parallax */
-/* Navigation Scroll */
-/* Image Error Handling */
-
 </script>
 
-<style>
-
-/* ============================= */
-/* RAILWAY AFTER DARK */
-/* ============================= */
-
-.railway-section {
-  margin-top: 0px;
-}
-
-.railway-card {
-  position: relative;
-  min-height: 360px;
-  display: flex;
-  align-items: flex-end;
-  overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.14);
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255,255,255,0.035),
-      rgba(255,255,255,0.01)
-    );
-}
-
-.railway-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(
-      120deg,
-      transparent 20%,
-      rgba(255,255,255,0.08) 50%,
-      transparent 80%
-    );
-  transform: translateX(-100%);
-  animation: railwayLightSweep 7s ease-in-out infinite;
-}
-
-.railway-card::after {
-  content: "INDIAN RAILWAYS";
-  position: absolute;
-  top: 24px;
-  right: 28px;
-  font-size: 10px;
-  letter-spacing: 3px;
-  opacity: 0.35;
-}
-
-.railway-content {
-  position: relative;
-  z-index: 2;
-  max-width: 620px;
-  padding: 48px;
-}
-
-.railway-label {
-  margin: 0 0 12px;
-  font-size: 10px;
-  letter-spacing: 4px;
-  opacity: 0.5;
-}
-
-.railway-content h3 {
-  margin: 0 0 16px;
-  font-size: clamp(34px, 6vw, 72px);
-  letter-spacing: -2px;
-}
-
-.railway-content p:not(.railway-label) {
-  max-width: 480px;
-  margin-bottom: 28px;
-  line-height: 1.7;
-  opacity: 0.65;
-}
-
-.railway-button {
-  display: inline-block;
-  padding: 13px 22px;
-  border: 1px solid rgba(255,255,255,0.3);
-  color: inherit;
-  text-decoration: none;
-  font-size: 11px;
-  letter-spacing: 2px;
-  transition: 0.35s ease;
-}
-
-.railway-button:hover {
-  background: rgba(255,255,255,0.08);
-  border-color: rgba(255,255,255,0.7);
-}
-
-@keyframes railwayLightSweep {
-
-  0%, 55% {
-    transform: translateX(-100%);
-  }
-
-  75%, 100% {
-    transform: translateX(100%);
-  }
-
-}
-
-@media (max-width: 700px) {
-
-  .railway-section {
-    margin-top: 30px;
-  }
-
-  .railway-card {
-    min-height: 420px;
-  }
-
-  .railway-content {
-    padding: 30px 24px;
-  }
-
-}
-
-</style>
 </body>
 </html>
