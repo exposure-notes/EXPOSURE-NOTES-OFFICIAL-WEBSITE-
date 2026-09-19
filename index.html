@@ -2923,19 +2923,19 @@ document
 </script>
 
 
-<!-- =========================================================
-     MAINTENANCE SWITCH
-========================================================= -->
+<!-- ============================= -->
+<!-- MAINTENANCE MODE -->
+<!-- ============================= -->
+
+<script src="maintenance-config.js"></script>
 
 <script>
 
-const MAINTENANCE_MODE = false;
+  if (MAINTENANCE_MODE) {
 
-if (MAINTENANCE_MODE) {
+    window.location.href = "maintenance.html";
 
-  window.location.replace("maintenance.html");
-
-}
+  }
 
 </script>
 
