@@ -3015,6 +3015,290 @@ window.addEventListener(
 
 
 /* =========================================================
+   EXPERIMENTAL ANIMATION LAB
+   CINEMATIC DEPTH SYSTEM — EXPERIMENT 01
+   Temporary — remove this entire section to revert
+========================================================= */
+
+(function () {
+
+  const motionItems = document.querySelectorAll(
+    ".photo-frame, .feature-image, .collection-item, .certificate-card"
+  );
+
+  const isTouchDevice =
+    window.matchMedia("(pointer: coarse)").matches;
+
+  let ticking = false;
+
+
+  /* ---------------------------------------------------------
+     SCROLL DEPTH
+  --------------------------------------------------------- */
+
+  function updateDepth() {
+
+    const viewportCenter =
+      window.innerHeight / 2;
+
+    motionItems.forEach(function (element) {
+
+      const rect =
+        element.getBoundingClientRect();
+
+      const elementCenter =
+        rect.top + rect.height / 2;
+
+      const distance =
+        elementCenter - viewportCenter;
+
+      const normalized =
+        Math.max(
+          -1,
+          Math.min(
+            1,
+            distance / window.innerHeight
+          )
+        );
+
+      const translate =
+        normalized * -18;
+
+      const scale =
+        1 +
+        (1 - Math.abs(normalized)) * 0.012;
+
+      element.style.setProperty(
+        "--experimental-y",
+        translate + "px"
+      );
+
+      element.style.setProperty(
+        "--experimental-scale",
+        scale
+      );
+
+    });
+
+    ticking = false;
+
+  }
+
+
+  window.addEventListener(
+    "scroll",
+    function () {
+
+      if (!ticking) {
+
+        window.requestAnimationFrame(
+          updateDepth
+        );
+
+        ticking = true;
+
+      }
+
+    },
+    { passive: true }
+  );
+
+
+  /* ---------------------------------------------------------
+     MOUSE DEPTH
+  --------------------------------------------------------- */
+
+  if (!isTouchDevice) {
+
+    document.addEventListener(
+      "mousemove",
+      function (event) {
+
+        const x =
+          (event.clientX / window.innerWidth) - 0.5;
+
+        const y =
+          (event.clientY / window.innerHeight) - 0.5;
+
+
+        motionItems.forEach(
+          function (element) {
+
+            const rect =
+              element.getBoundingClientRect();
+
+
+            if (
+              rect.bottom < 0 ||
+              rect.top > window.innerHeight
+            ) {
+              return;
+            }
+
+
+            const moveX =
+              x * 7;
+
+            const moveY =
+              y * 5;
+
+
+            element.style.setProperty(
+              "--experimental-x",
+              moveX + "px"
+            );
+
+            element.style.setProperty(
+              "--experimental-mouse-y",
+              moveY + "px"
+            );
+
+          }
+        );
+
+      },
+      { passive: true }
+    );
+
+  }
+
+
+  /* ---------------------------------------------------------
+     INITIAL STATE
+  --------------------------------------------------------- */
+
+  motionItems.forEach(
+    function (element) {
+
+      element.style.setProperty(
+        "--experimental-x",
+        "0px"
+      );
+
+      element.style.setProperty(
+        "--experimental-y",
+        "0px"
+      );
+
+      element.style.setProperty(
+        "--experimental-mouse-y",
+        "0px"
+      );
+
+      element.style.setProperty(
+        "--experimental-scale",
+        "1"
+      );
+
+
+      element.style.transition =
+        "transform 1.2s cubic-bezier(.2,.7,.2,1)";
+
+
+      element.style.transform =
+        "translate3d(" +
+        "var(--experimental-x), " +
+        "calc(var(--experimental-y) + var(--experimental-mouse-y)), " +
+        "0" +
+        ") scale(var(--experimental-scale))";
+
+    }
+  );
+
+
+  /* ---------------------------------------------------------
+     CURSOR LIGHT
+  --------------------------------------------------------- */
+
+  if (!isTouchDevice) {
+
+    const light =
+      document.createElement("div");
+
+    light.className =
+      "experimental-cursor-light";
+
+    document.body.appendChild(light);
+
+
+    document.addEventListener(
+      "mousemove",
+      function (event) {
+
+        light.style.transform =
+          "translate3d(" +
+          event.clientX +
+          "px, " +
+          event.clientY +
+          "px, 0)";
+
+      },
+      { passive: true }
+    );
+
+  }
+
+
+})();
+
+
+/* =========================================================
+   EXPERIMENTAL CURSOR LIGHT
+========================================================= */
+
+const experimentalStyle =
+  document.createElement("style");
+
+
+experimentalStyle.textContent = `
+
+.experimental-cursor-light {
+
+  position: fixed;
+
+  z-index: 9998;
+
+  top: 0;
+  left: 0;
+
+  width: 280px;
+  height: 280px;
+
+  margin-left: -140px;
+  margin-top: -140px;
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(216,201,168,.075) 0%,
+      rgba(216,201,168,.035) 28%,
+      transparent 68%
+    );
+
+  filter: blur(3px);
+
+  mix-blend-mode: screen;
+
+  will-change: transform;
+
+}
+
+`;
+
+document.head.appendChild(
+  experimentalStyle
+);
+
+
+/* =========================================================
+   END EXPERIMENTAL ANIMATION LAB
+========================================================= */
+
+/* =========================================================
    IMAGE ERROR HANDLING
 ========================================================= */
 
