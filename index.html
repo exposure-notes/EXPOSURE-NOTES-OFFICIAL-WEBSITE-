@@ -3296,6 +3296,192 @@ document
   });
 
 </script>
+<!-- ============================= -->
+<!-- EXPOSURE NOTES VIEW COUNTER -->
+<!-- ============================= -->
 
+<section class="view-counter">
+
+  <div class="view-counter-line"></div>
+
+  <div class="view-counter-content">
+
+    <span class="view-counter-label">
+      EXPOSURE NOTES
+    </span>
+
+    <div class="view-counter-number" id="viewCount">
+      0000
+    </div>
+
+    <span class="view-counter-subtitle">
+      VISUAL ARCHIVE · VISITS
+    </span>
+
+  </div>
+
+  <div class="view-counter-line"></div>
+
+</section>
+
+
+<style>
+
+/* ============================= */
+/* VIEW COUNTER */
+/* ============================= */
+
+.view-counter {
+  width: 90vw;
+  max-width: 1200px;
+  margin: 40px auto 80px;
+
+  display: flex;
+  align-items: center;
+  gap: 28px;
+
+  opacity: 0.85;
+}
+
+.view-counter-line {
+  flex: 1;
+  height: 1px;
+  background: rgba(238,234,226,0.14);
+}
+
+.view-counter-content {
+  min-width: 150px;
+  text-align: center;
+}
+
+.view-counter-label {
+  display: block;
+
+  font-family: "DM Mono", monospace;
+  font-size: 8px;
+  letter-spacing: 0.35em;
+
+  color: rgba(238,234,226,0.45);
+  margin-bottom: 10px;
+}
+
+.view-counter-number {
+  font-family: "DM Mono", monospace;
+
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 300;
+
+  letter-spacing: 0.08em;
+  line-height: 1;
+
+  color: rgba(238,234,226,0.92);
+
+  font-variant-numeric: tabular-nums;
+
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
+}
+
+.view-counter-subtitle {
+  display: block;
+
+  margin-top: 12px;
+
+  font-family: "DM Mono", monospace;
+  font-size: 7px;
+  letter-spacing: 0.22em;
+
+  color: rgba(238,234,226,0.3);
+}
+
+
+/* NUMBER ANIMATION */
+
+.view-counter-number.counting {
+  opacity: 0.45;
+  transform: translateY(-3px);
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+  .view-counter {
+    width: 86vw;
+    gap: 16px;
+    margin: 30px auto 60px;
+  }
+
+  .view-counter-content {
+    min-width: 125px;
+  }
+
+  .view-counter-number {
+    font-size: 32px;
+  }
+
+  .view-counter-label {
+    font-size: 7px;
+  }
+
+  .view-counter-subtitle {
+    font-size: 6px;
+  }
+
+}
+
+</style>
+
+
+<script>
+
+/* ============================= */
+/* VIEW COUNTER ANIMATION */
+/* ============================= */
+
+const viewCounter = document.getElementById("viewCount");
+
+let targetViews = 1284;
+let currentViews = 0;
+
+function animateViews() {
+
+  if (currentViews < targetViews) {
+
+    currentViews += Math.ceil(
+      (targetViews - currentViews) / 12
+    );
+
+    if (currentViews > targetViews) {
+      currentViews = targetViews;
+    }
+
+    viewCounter.textContent =
+      currentViews.toLocaleString("en-IN");
+
+    requestAnimationFrame(animateViews);
+
+  } else {
+
+    viewCounter.textContent =
+      targetViews.toLocaleString("en-IN");
+
+  }
+
+}
+
+setTimeout(() => {
+  viewCounter.classList.add("counting");
+  animateViews();
+
+  setTimeout(() => {
+    viewCounter.classList.remove("counting");
+  }, 700);
+
+}, 400);
+
+</script>
 </body>
 </html>
