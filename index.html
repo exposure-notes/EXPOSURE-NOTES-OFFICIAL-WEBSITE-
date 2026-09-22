@@ -3484,54 +3484,63 @@ setTimeout(() => {
 
 </script>
 
+<!-- =========================================================
+     EXPOSURE NOTES — LATEST INSTAGRAM NOTIFICATION
+     PASTE THIS ENTIRE BLOCK AT THE VERY BOTTOM OF index.html
+     ========================================================= -->
 
-<!-- =========================================
-     LATEST INSTAGRAM NOTIFICATION
-     ========================================= -->
-
-<div class="instagram-ticker">
+<div id="enInstagramNotification">
 
   <a
-    id="instagramLatestLink"
+    id="enInstagramLatest"
     href="#"
     target="_blank"
     rel="noopener noreferrer"
-    class="instagram-ticker-track"
+    aria-label="View latest Exposure Notes photograph on Instagram"
   >
 
-    <div class="instagram-ticker-content">
+    <div class="enInstagramMarquee">
 
-      <span class="ticker-status">
-        <span class="ticker-dot"></span>
-        NEW FRAME
-      </span>
+      <!-- MESSAGE 1 -->
+      <div class="enInstagramMessage">
 
-      <span class="ticker-separator">✦</span>
+        <span class="enInstagramNew">
+          <span class="enInstagramDot"></span>
+          NEW FRAME
+        </span>
 
-      <span>LATEST FROM EXPOSURE NOTES</span>
+        <span class="enInstagramStar">✦</span>
 
-      <span class="ticker-separator">✦</span>
+        <span>LATEST FROM EXPOSURE NOTES</span>
 
-      <span>NOW LIVE ON INSTAGRAM</span>
+        <span class="enInstagramStar">✦</span>
 
-      <span class="ticker-arrow">↗</span>
+        <span class="enInstagramClick">
+          CLICK HERE TO VIEW ON INSTAGRAM ↗
+        </span>
 
-      <span class="ticker-separator">✦</span>
+      </div>
 
-      <span class="ticker-status">
-        <span class="ticker-dot"></span>
-        NEW FRAME
-      </span>
 
-      <span class="ticker-separator">✦</span>
+      <!-- MESSAGE 2 -->
+      <div class="enInstagramMessage">
 
-      <span>LATEST FROM EXPOSURE NOTES</span>
+        <span class="enInstagramNew">
+          <span class="enInstagramDot"></span>
+          NEW FRAME
+        </span>
 
-      <span class="ticker-separator">✦</span>
+        <span class="enInstagramStar">✦</span>
 
-      <span>NOW LIVE ON INSTAGRAM</span>
+        <span>LATEST FROM EXPOSURE NOTES</span>
 
-      <span class="ticker-arrow">↗</span>
+        <span class="enInstagramStar">✦</span>
+
+        <span class="enInstagramClick">
+          CLICK HERE TO VIEW ON INSTAGRAM ↗
+        </span>
+
+      </div>
 
     </div>
 
@@ -3542,142 +3551,315 @@ setTimeout(() => {
 
 <style>
 
-/* =========================================
-   LATEST INSTAGRAM TICKER
-   ========================================= */
+/* =========================================================
+   LATEST INSTAGRAM NOTIFICATION
+   ========================================================= */
 
-.instagram-ticker {
+#enInstagramNotification {
+
   width: 100%;
+
   overflow: hidden;
 
-  border-top: 1px solid rgba(238,234,226,0.10);
-  border-bottom: 1px solid rgba(238,234,226,0.10);
-
-  background: rgba(13,13,12,0.32);
-
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-
   position: relative;
-  z-index: 50;
+
+  z-index: 9999;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(10,10,9,0.78),
+      rgba(10,10,9,0.40),
+      rgba(10,10,9,0.78)
+    );
+
+  border-top:
+    1px solid rgba(238,234,226,0.08);
+
+  border-bottom:
+    1px solid rgba(238,234,226,0.13);
+
+  backdrop-filter:
+    blur(16px);
+
+  -webkit-backdrop-filter:
+    blur(16px);
+
 }
 
-.instagram-ticker-track {
+
+/* =========================================================
+   CLICKABLE RIBBON
+   ========================================================= */
+
+#enInstagramLatest {
+
   display: block;
+
   width: 100%;
 
   overflow: hidden;
 
   color: inherit;
+
   text-decoration: none;
+
 }
 
-.instagram-ticker-content {
-  width: max-content;
+
+/* =========================================================
+   MOVING CONTENT
+   ========================================================= */
+
+.enInstagramMarquee {
 
   display: flex;
+
+  width: max-content;
+
+  animation:
+    enInstagramMove
+    22s
+    linear
+    infinite;
+
+  will-change: transform;
+
+}
+
+
+/* =========================================================
+   MESSAGE
+   ========================================================= */
+
+.enInstagramMessage {
+
+  display: flex;
+
   align-items: center;
-  gap: 28px;
 
-  padding: 13px 0;
+  gap: 23px;
 
-  font-family: "DM Mono", monospace;
-  font-size: 8px;
-  letter-spacing: 0.25em;
+  padding:
+    11px
+    55px
+    11px
+    0;
+
   white-space: nowrap;
 
-  color: rgba(238,234,226,0.58);
+  font-family:
+    "DM Mono",
+    monospace;
 
-  animation: exposureTicker 24s linear infinite;
+  font-size: 8px;
+
+  letter-spacing: 0.25em;
+
+  color:
+    rgba(238,234,226,0.56);
+
 }
 
-.instagram-ticker:hover .instagram-ticker-content {
-  animation-play-state: paused;
-}
 
-.ticker-status {
+/* =========================================================
+   NEW FRAME
+   ========================================================= */
+
+.enInstagramNew {
+
   display: inline-flex;
-  align-items: center;
-  gap: 9px;
 
-  color: rgba(238,234,226,0.82);
+  align-items: center;
+
+  gap: 8px;
+
+  color:
+    rgba(238,234,226,0.92);
+
 }
 
-.ticker-dot {
+
+/* =========================================================
+   LIVE DOT
+   ========================================================= */
+
+.enInstagramDot {
+
   width: 5px;
+
   height: 5px;
+
+  flex-shrink: 0;
 
   border-radius: 50%;
 
-  background: rgba(238,234,226,0.85);
+  background:
+    rgba(238,234,226,0.95);
 
   box-shadow:
-    0 0 10px rgba(238,234,226,0.35);
+    0 0 11px
+    rgba(238,234,226,0.42);
 
-  animation: tickerPulse 1.8s ease-in-out infinite;
-}
+  animation:
+    enInstagramPulse
+    1.7s
+    ease-in-out
+    infinite;
 
-.ticker-separator {
-  color: rgba(238,234,226,0.22);
-}
-
-.ticker-arrow {
-  font-size: 13px;
-  letter-spacing: 0;
-  color: rgba(238,234,226,0.75);
 }
 
 
-/* LEFT → RIGHT */
+/* =========================================================
+   STAR
+   ========================================================= */
 
-@keyframes exposureTicker {
+.enInstagramStar {
 
-  from {
-    transform: translateX(-25%);
+  color:
+    rgba(238,234,226,0.22);
+
+}
+
+
+/* =========================================================
+   CLICK TEXT
+   ========================================================= */
+
+.enInstagramClick {
+
+  color:
+    rgba(238,234,226,0.92);
+
+  transition:
+    opacity 0.3s ease;
+
+}
+
+
+/* =========================================================
+   LEFT → RIGHT MOVEMENT
+   ========================================================= */
+
+@keyframes enInstagramMove {
+
+  0% {
+
+    transform:
+      translateX(-50%);
+
   }
 
-  to {
-    transform: translateX(0%);
+  100% {
+
+    transform:
+      translateX(0%);
+
   }
 
 }
 
 
-/* PULSING NOTIFICATION DOT */
+/* =========================================================
+   DOT ANIMATION
+   ========================================================= */
 
-@keyframes tickerPulse {
+@keyframes enInstagramPulse {
 
   0%,
   100% {
+
     opacity: 0.35;
-    transform: scale(0.8);
+
+    transform:
+      scale(0.75);
+
   }
 
   50% {
+
     opacity: 1;
-    transform: scale(1);
+
+    transform:
+      scale(1);
+
   }
 
 }
 
 
-/* MOBILE */
+/* =========================================================
+   HOVER
+   ========================================================= */
+
+#enInstagramLatest:hover
+.enInstagramMarquee {
+
+  animation-play-state:
+    paused;
+
+}
+
+#enInstagramLatest:hover
+.enInstagramClick {
+
+  opacity:
+    0.58;
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
 
 @media (max-width: 600px) {
 
-  .instagram-ticker-content {
-    gap: 20px;
+  .enInstagramMessage {
 
-    padding: 12px 0;
+    gap: 16px;
+
+    padding:
+      10px
+      35px
+      10px
+      0;
 
     font-size: 7px;
-    letter-spacing: 0.20em;
 
-    animation-duration: 20s;
+    letter-spacing: 0.18em;
+
   }
 
-  .ticker-arrow {
-    font-size: 12px;
+  .enInstagramMarquee {
+
+    animation-duration:
+      18s;
+
+  }
+
+  .enInstagramDot {
+
+    width: 4px;
+
+    height: 4px;
+
+  }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .enInstagramMarquee {
+
+    animation:
+      none;
+
   }
 
 }
@@ -3687,33 +3869,87 @@ setTimeout(() => {
 
 <script>
 
-/* =========================================
+/* =========================================================
    YOUR LATEST INSTAGRAM POST
-   CHANGE ONLY THIS URL
-   ========================================= */
+   CHANGE ONLY THIS LINK
+   ========================================================= */
 
-const latestInstagramPost =
+const EN_LATEST_INSTAGRAM =
   "https://www.instagram.com/p/DclzXE4vFSz/?stkn=M2FjempsbnBod3I3";
 
 
-/* DO NOT CHANGE BELOW */
+/* =========================================================
+   GET NOTIFICATION
+   ========================================================= */
 
-const instagramLatestLink =
-  document.getElementById("instagramLatestLink");
+const enNotification =
+  document.getElementById(
+    "enInstagramNotification"
+  );
+
+const enInstagramLink =
+  document.getElementById(
+    "enInstagramLatest"
+  );
+
+
+/* =========================================================
+   SET INSTAGRAM LINK
+   ========================================================= */
 
 if (
-  instagramLatestLink &&
-  latestInstagramPost &&
-  latestInstagramPost !== "PASTE_YOUR_INSTAGRAM_POST_LINK_HERE"
+  enInstagramLink &&
+  EN_LATEST_INSTAGRAM !==
+  "PASTE_YOUR_INSTAGRAM_POST_LINK_HERE"
 ) {
 
-  instagramLatestLink.href =
-    latestInstagramPost;
+  enInstagramLink.href =
+    EN_LATEST_INSTAGRAM;
+
+}
+
+
+/* =========================================================
+   AUTOMATICALLY MOVE NOTIFICATION TO TOP
+   ========================================================= */
+
+if (enNotification) {
+
+  const enHeader =
+    document.querySelector("header");
+
+  if (enHeader) {
+
+    enHeader.insertAdjacentElement(
+      "afterend",
+      enNotification
+    );
+
+  } else {
+
+    const enFirstSection =
+      document.querySelector("main > section");
+
+    if (enFirstSection) {
+
+      enFirstSection.insertAdjacentElement(
+        "beforebegin",
+        enNotification
+      );
+
+    } else {
+
+      document.body.prepend(
+        enNotification
+      );
+
+    }
+
+  }
 
 }
 
 </script>
-
 
 </body>
 </html>
