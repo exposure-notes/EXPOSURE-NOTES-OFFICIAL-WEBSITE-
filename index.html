@@ -3951,5 +3951,590 @@ if (enNotification) {
 
 </script>
 
+
+
+
+
+
+<!-- =========================================================
+     EXPOSURE NOTES — DEVICE / SHOT ON SECTION
+     ========================================================= -->
+
+<section id="en-device-section">
+
+  <div class="en-device-inner">
+
+    <div class="en-device-heading">
+
+      <span class="en-device-number">10</span>
+
+      <span class="en-device-label">
+        SHOT ON
+      </span>
+
+    </div>
+
+
+    <div class="en-device-layout">
+
+      <!-- DEVICE PHOTOGRAPH -->
+      <div class="en-device-image-wrap">
+
+        <img
+          src="Photography/phone.jpg"
+          alt="iQOO Z7 Pro used for Exposure Notes mobile photography"
+          class="en-device-image"
+        >
+
+      </div>
+
+
+      <!-- DEVICE INFORMATION -->
+      <div class="en-device-info">
+
+        <p class="en-device-eyebrow">
+          THE DEVICE BEHIND THE FRAMES
+        </p>
+
+        <h2>
+          iQOO <em>Z7 Pro</em>
+        </h2>
+
+        <p class="en-device-description">
+          The phone behind Exposure Notes.
+          Every frame is captured through mobile photography,
+          one moment at a time.
+        </p>
+
+        <div class="en-device-meta">
+
+          <div class="en-device-meta-line">
+            <span>DEVICE</span>
+            <strong>iQOO Z7 Pro</strong>
+          </div>
+
+          <div class="en-device-meta-line">
+            <span>MEDIUM</span>
+            <strong>MOBILE PHOTOGRAPHY</strong>
+          </div>
+
+          <div class="en-device-meta-line">
+            <span>ARCHIVE</span>
+            <strong>EXPOSURE NOTES</strong>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<style>
+
+/* =========================================================
+   EXPOSURE NOTES
+   DEVICE SECTION
+   ========================================================= */
+
+#en-device-section {
+
+  width: 100%;
+
+  margin: 90px 0 70px;
+
+  padding: 0 6vw;
+
+  box-sizing: border-box;
+
+}
+
+
+/* =========================================================
+   INNER
+   ========================================================= */
+
+.en-device-inner {
+
+  width: 100%;
+
+  max-width: 1200px;
+
+  margin: 0 auto;
+
+  border-top:
+    1px solid rgba(238,234,226,0.14);
+
+  padding-top: 18px;
+
+}
+
+
+/* =========================================================
+   SECTION HEADING
+   ========================================================= */
+
+.en-device-heading {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 38px;
+
+  font-family:
+    "DM Mono",
+    monospace;
+
+  font-size: 8px;
+
+  letter-spacing: 0.28em;
+
+  color:
+    rgba(238,234,226,0.42);
+
+}
+
+.en-device-number {
+
+  font-variant-numeric:
+    tabular-nums;
+
+}
+
+.en-device-label {
+
+  color:
+    rgba(238,234,226,0.72);
+
+}
+
+
+/* =========================================================
+   MAIN LAYOUT
+   ========================================================= */
+
+.en-device-layout {
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.05fr)
+    minmax(280px, 0.95fr);
+
+  gap: 7vw;
+
+  align-items: center;
+
+}
+
+
+/* =========================================================
+   IMAGE
+   ========================================================= */
+
+.en-device-image-wrap {
+
+  position: relative;
+
+  overflow: hidden;
+
+  background:
+    #11110f;
+
+  border:
+    1px solid rgba(238,234,226,0.12);
+
+}
+
+
+.en-device-image {
+
+  display: block;
+
+  width: 100%;
+
+  height: auto;
+
+  aspect-ratio: 4 / 5;
+
+  object-fit: cover;
+
+  object-position: center;
+
+  transform:
+    scale(1.01);
+
+  transition:
+    transform 1.2s
+    cubic-bezier(.2,.7,.2,1);
+
+}
+
+
+.en-device-image-wrap:hover
+.en-device-image {
+
+  transform:
+    scale(1.035);
+
+}
+
+
+/* =========================================================
+   INFORMATION
+   ========================================================= */
+
+.en-device-info {
+
+  max-width: 470px;
+
+}
+
+
+.en-device-eyebrow {
+
+  margin:
+    0 0 16px;
+
+  font-family:
+    "DM Mono",
+    monospace;
+
+  font-size: 8px;
+
+  letter-spacing: 0.25em;
+
+  color:
+    rgba(238,234,226,0.42);
+
+}
+
+
+.en-device-info h2 {
+
+  margin:
+    0 0 24px;
+
+  font-family:
+    "Playfair Display",
+    serif;
+
+  font-size:
+    clamp(48px, 6vw, 78px);
+
+  font-weight:
+    400;
+
+  line-height:
+    0.9;
+
+  letter-spacing:
+    -0.055em;
+
+  color:
+    rgba(238,234,226,0.94);
+
+}
+
+
+.en-device-info h2 em {
+
+  font-weight:
+    400;
+
+}
+
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+.en-device-description {
+
+  max-width: 400px;
+
+  margin:
+    0 0 34px;
+
+  font-size: 13px;
+
+  line-height: 1.8;
+
+  color:
+    rgba(238,234,226,0.58);
+
+}
+
+
+/* =========================================================
+   META INFORMATION
+   ========================================================= */
+
+.en-device-meta {
+
+  border-top:
+    1px solid rgba(238,234,226,0.12);
+
+}
+
+
+.en-device-meta-line {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 20px;
+
+  padding:
+    13px 0;
+
+  border-bottom:
+    1px solid rgba(238,234,226,0.09);
+
+  font-family:
+    "DM Mono",
+    monospace;
+
+  font-size: 8px;
+
+  letter-spacing: 0.14em;
+
+}
+
+
+.en-device-meta-line span {
+
+  color:
+    rgba(238,234,226,0.34);
+
+}
+
+
+.en-device-meta-line strong {
+
+  font-weight:
+    400;
+
+  text-align:
+    right;
+
+  color:
+    rgba(238,234,226,0.72);
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  #en-device-section {
+
+    margin:
+      65px 0 50px;
+
+    padding:
+      0 24px;
+
+  }
+
+
+  .en-device-heading {
+
+    margin-bottom:
+      26px;
+
+  }
+
+
+  .en-device-layout {
+
+    grid-template-columns:
+      1fr;
+
+    gap:
+      34px;
+
+  }
+
+
+  .en-device-image {
+
+    aspect-ratio:
+      4 / 5;
+
+  }
+
+
+  .en-device-info {
+
+    max-width:
+      none;
+
+  }
+
+
+  .en-device-info h2 {
+
+    font-size:
+      clamp(46px, 15vw, 68px);
+
+    margin-bottom:
+      20px;
+
+  }
+
+
+  .en-device-description {
+
+    font-size:
+      13px;
+
+    margin-bottom:
+      28px;
+
+  }
+
+
+  .en-device-meta-line {
+
+    font-size:
+      7px;
+
+    gap:
+      12px;
+
+  }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .en-device-image {
+
+    transition:
+      none;
+
+  }
+
+}
+
+</style>
+
+
+<script>
+
+/* =========================================================
+   AUTOMATIC PLACEMENT
+   Moves the device section to just before
+   the existing "Visit Instagram Page" button.
+   ========================================================= */
+
+(function () {
+
+  const deviceSection =
+    document.getElementById(
+      "en-device-section"
+    );
+
+  if (!deviceSection) return;
+
+
+  const allLinks =
+    document.querySelectorAll("a");
+
+
+  let instagramButton = null;
+
+
+  for (
+    const link of allLinks
+  ) {
+
+    const text =
+      link.textContent
+        .trim()
+        .toLowerCase();
+
+
+    if (
+      text.includes(
+        "visit instagram page"
+      )
+      ||
+      text.includes(
+        "visit instagram"
+      )
+      ||
+      text.includes(
+        "instagram page"
+      )
+    ) {
+
+      instagramButton = link;
+
+      break;
+
+    }
+
+  }
+
+
+  if (instagramButton) {
+
+    const parent =
+      instagramButton.parentElement;
+
+
+    parent.insertBefore(
+      deviceSection,
+      instagramButton
+    );
+
+  } else {
+
+    /*
+      Fallback:
+      If the Instagram button cannot be found,
+      place the section before the footer.
+    */
+
+    const footer =
+      document.querySelector("footer");
+
+
+    if (footer) {
+
+      footer.parentElement.insertBefore(
+        deviceSection,
+        footer
+      );
+
+    }
+
+  }
+
+})();
+
+</script>
+
+
 </body>
 </html>
