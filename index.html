@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Exposure Notes — Ashu</title>
+
+<meta
+  name="description"
+  content="Exposure Notes — a visual collection of moments, moods and memories captured through mobile photography by Ashu."
+>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+  href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;1,400&display=swap"
+  rel="stylesheet"
+>
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #0d0d0c;
+  color: #eeeae2;
+  font-family: "Manrope", sans-serif;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: #eeeae2;
+  color: #0d0d0c;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+}
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+:root {
+  --bg: #0d0d0c;
+  --surface: #121211;
+  --surface-2: #171715;
+
+  --text: #eeeae2;
+  --muted: #85827b;
+  --dim: #55534e;
+
+  --line: rgba(238, 234, 226, 0.13);
+  --line-soft: rgba(238, 234, 226, 0.065);
+
+  --accent: #d8c9a8;
+
+  --max: 1440px;
+}
+
+
+/* =========================================================
+   LOADER
+========================================================= */
+
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--bg);
+  color: var(--text);
+
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+
+  transition:
+    opacity 1s cubic-bezier(.77,0,.18,1),
+    visibility 0s linear 1s;
+}
+
+.loader.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loader-inner {
+  width: min(90vw, 700px);
+}
+
+.loader-top {
+  display: flex;
+  justify-content: space-between;
+
+  margin-bottom: 24px;
+
+  font-family: "DM Mono", monospace;
+  font-size: 9px;
+
+  letter-spacing: .18em;
+  text-transform: uppercase;
+
+  color: var(--muted);
+}
+
+.loader-title {
+  font-size: clamp(60px, 12vw, 150px);
+  line-height: .78;
+
+  letter-spacing: -.07em;
+  font-weight: 500;
+}
+
+.loader-title span {
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.loader-line {
+  position: relative;
+
+  width: 100%;
+  height: 1px;
+
+  margin-top: 35px;
+
+  background: var(--line);
+  overflow: hidden;
+}
+
+.loader-line::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background: var(--text);
+
+  transform: translateX(-100%);
+
+  animation: loadingLine 2.8s cubic-bezier(.77,0,.18,1) forwards;
+}
+
+@keyframes loadingLine {
+  to {
+    transform: translateX(0);
+  }
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.nav {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+
+  padding: 25px 5vw;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  z-index: 9000;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(13,13,12,.92),
+      rgba(13,13,12,0)
+    );
+
+  transition:
+    background .4s ease,
+    padding .4s ease;
+}
+
+.nav-logo {
+  font-family: "DM Mono", monospace;
+
+  font-size: 10px;
+
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+
+.nav-links {
+  display: flex;
+  gap: 30px;
+}
+
+.nav-links a {
+  position: relative;
+
+  font-family: "DM Mono", monospace;
+
+  font-size: 9px;
+
+  letter-spacing: .16em;
+  text-transform: uppercase;
+
+  color: var(--muted);
+
+  transition: color .3s ease;
+}
+
+.nav-links a::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  bottom: -6px;
+
+  width: 100%;
+  height: 1px;
+
+  background: var(--text);
+
+  transform: scaleX(0);
+  transform-origin: right;
+
+  transition: transform .35s ease;
+}
+
+.nav-links a:hover {
+  color: var(--text);
+}
+
+.nav-links a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+@media (max-width: 600px) {
+
+  .nav {
+    padding: 20px;
+  }
+
+  .nav-links {
+    gap: 16px;
+  }
+
+  .nav-links a {
+    font-size: 8px;
+  }
+}
+
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+.container {
+  width: min(var(--max), 90vw);
+  margin: auto;
+}
+
+.section-number {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  font-family: "DM Mono", monospace;
+
+  font-size: 9px;
+
+  letter-spacing: .18em;
+  text-transform: uppercase;
+
+  color: var(--muted);
+}
+
+.section-number::before {
+  content: "";
+
+  width: 30px;
+  height: 1px;
+
+  background: var(--muted);
+}
+
+.section-heading {
+  font-size: clamp(55px, 10vw, 150px);
+
+  line-height: .78;
+
+  letter-spacing: -.075em;
+
+  font-weight: 500;
+}
+
+.section-heading em {
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-weight: 400;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+  min-height: 100svh;
+
+  position: relative;
+
+  display: flex;
+  align-items: flex-end;
+
+  padding: 150px 5vw 70px;
+
+  overflow: hidden;
+}
+
+.hero-image {
+  position: absolute;
+  inset: 0;
+
+  z-index: -2;
+}
+
+.hero-image::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      to top,
+      rgba(13,13,12,.98) 0%,
+      rgba(13,13,12,.55) 40%,
+      rgba(13,13,12,.18) 100%
+    );
+}
+
+.hero-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transform: scale(1.05);
+
+  animation: heroImage 12s ease-out forwards;
+}
+
+@keyframes heroImage {
+
+  from {
+    transform: scale(1.08);
+  }
+
+  to {
+    transform: scale(1);
+  }
+
+}
+
+.hero-content {
+  width: 100%;
+}
+
+.hero-meta {
+  display: flex;
+  justify-content: space-between;
+
+  margin-bottom: 30px;
+
+  font-family: "DM Mono", monospace;
+
+  font-size: 9px;
+
+  letter-spacing: .17em;
+  text-transform: uppercase;
+
+  color: #b4b0a8;
+}
+
+.hero-title {
+  font-size: clamp(70px, 13vw, 190px);
+
+  line-height: .77;
+
+  letter-spacing: -.085em;
+
+  font-weight: 500;
+}
+
+.hero-title span {
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.hero-bottom {
+  margin-top: 60px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  gap: 40px;
+}
+
+.hero-description {
+  max-width: 470px;
+
+  color: #aaa69e;
+
+  font-size: 13px;
+
+  line-height: 1.8;
+}
+
+.hero-scroll {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  font-family: "DM Mono", monospace;
+
+  font-size: 8px;
+
+  letter-spacing: .17em;
+  text-transform: uppercase;
+
+  color: var(--muted);
+}
+
+.hero-scroll::after {
+  content: "";
+
+  width: 50px;
+  height: 1px;
+
+  background: var(--muted);
+
+  animation: scrollLine 2s ease-in-out infinite;
+}
+
+@keyframes scrollLine {
+
+  0%,
+  100% {
+    transform: scaleX(.4);
+    transform-origin: left;
+  }
+
+  50% {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+}
+
+@media (max-width: 700px) {
+
+  .hero {
+    padding: 130px 20px 45px;
+  }
+
+  .hero-meta {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .hero-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+
+    margin-top: 45px;
+  }
+
+}
+
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.intro {
+  padding: 180px 0;
+}
+
+.intro-grid {
+  display: grid;
+
+  grid-template-columns: .7fr 1.7fr;
+
+  gap: 8vw;
+}
+
+.intro-copy {
+  max-width: 850px;
+}
+
+.intro-title {
+  font-size: clamp(38px, 5vw, 75px);
+
+  line-height: 1;
+
+  letter-spacing: -.055em;
+
+  font-weight: 400;
+}
+
+.intro-title em {
+  font-family: "Playfair Display", serif;
+}
+
+.intro-description {
+  margin-top: 50px;
+
+  max-width: 680px;
+
+  font-size: 16px;
+
+  line-height: 1.9;
+
+  color: #918e87;
+}
+
+@media (max-width: 800px) {
+
+  .intro {
+    padding: 110px 0;
+  }
+
+  .intro-grid {
+    grid-template-columns: 1fr;
+    gap: 45px;
+  }
+
+}
+
+
+/* =========================================================
+   FRAMES
+========================================================= */
+
+.frames {
+  padding: 100px 0 180px;
+}
+
+.frames-header {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: flex-end;
+
+  gap: 40px;
+
+  margin-bottom: 100px;
+}
+
+.frames-note {
+  max-width: 280px;
+
+  color: var(--muted);
+
+  font-size: 11px;
+
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   PHOTO ENTRY
+========================================================= */
+
+.photo-entry {
+  margin-bottom: 150px;
+}
+
+.photo-entry-header {
+  display: grid;
+
+  grid-template-columns: 60px 1fr auto;
+
+  align-items: end;
+
+  gap: 25px;
+
+  margin-bottom: 25px;
+
+  padding-bottom: 15px;
+
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.photo-number {
+  font-family: "DM Mono", monospace;
+
+  font-size: 9px;
+
+  color: var(--muted);
+
+  letter-spacing: .15em;
+}
+
+.photo-title {
+  font-size: clamp(25px, 3vw, 44px);
+
+  line-height: .95;
+
+  letter-spacing: -.045em;
+
+  font-weight: 400;
+}
+
+.photo-type {
+  font-family: "DM Mono", monospace;
+
+  font-size: 8px;
+
+  color: var(--muted);
+
+  letter-spacing: .14em;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   PHOTO FRAME
+========================================================= */
+
+.photo-frame {
+  position: relative;
+
+  padding: 10px;
+
+  background: #111110;
+
+  border: 1px solid rgba(238,234,226,.16);
+
+  overflow: hidden;
+
+  isolation: isolate;
+
+  box-shadow:
+    0 0 0 1px rgba(216,201,168,.025),
+    0 0 35px rgba(216,201,168,.08);
+
+  transition:
+    border-color .5s ease,
+    box-shadow .5s ease;
+}
+
+.photo-frame:hover {
+  border-color: rgba(216,201,168,.42);
+
+  box-shadow:
+    0 0 0 1px rgba(216,201,168,.05),
+    0 0 50px rgba(216,201,168,.11);
+}
+
+.photo-frame::before {
+  content: "";
+
+  position: absolute;
+
+  z-index: 3;
+
+  top: 0;
+  left: -30%;
+
+  width: 30%;
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--accent),
+      transparent
+    );
+
+  opacity: .95;
+
+  box-shadow:
+    0 0 8px rgba(216,201,168,.65),
+    0 0 16px rgba(216,201,168,.25);
+
+  animation: borderSweep 2.8s linear infinite;
+
+  pointer-events: none;
+}
+
+.photo-frame::after {
+  content: "";
+
+  position: absolute;
+
+  z-index: 3;
+
+  top: -20%;
+  left: -10%;
+
+  width: 1px;
+  height: 140%;
+
+  background:
+    linear-gradient(
+      to bottom,
+      transparent,
+      var(--accent),
+      transparent
+    );
+
+  opacity: .8;
+
+  box-shadow:
+    0 0 8px rgba(216,201,168,.55),
+    0 0 15px rgba(216,201,168,.22);
+
+  animation: borderSweepVertical 3.6s linear infinite;
+
+  pointer-events: none;
+}
+
+@keyframes borderSweep {
+
+  from {
+    left: -30%;
+  }
+
+  to {
+    left: 110%;
+  }
+
+}
+
+@keyframes borderSweepVertical {
+
+  from {
+    transform: translateY(-100%);
+  }
+
+  to {
+    transform: translateY(100%);
+  }
+
+}
+
+.photo-frame-inner {
+  position: relative;
+
+  overflow: hidden;
+
+  background: #080808;
+}
+
+.photo-frame-inner::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  border: 1px solid rgba(255,255,255,.06);
+
+  pointer-events: none;
+}
+
+.photo-frame img {
+  width: 100%;
+  height: auto;
+
+  object-fit: contain;
+
+  transition:
+    transform 1.2s cubic-bezier(.2,.7,.2,1),
+    filter 1.2s ease;
+}
+
+.photo-frame:hover img {
+  transform: scale(1.025);
+
+  filter: brightness(1.05);
+}
+
+
+/* =========================================================
+   SLIDESHOW
+========================================================= */
+
+.slideshow {
+  position: relative;
+
+  width: 100%;
+
+  aspect-ratio: var(--ratio, 16 / 9);
+
+  overflow: hidden;
+
+  background: #080808;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition:
+    opacity 1.2s cubic-bezier(.2,.7,.2,1),
+    visibility 1.2s;
+}
+
+.slide.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  transform: scale(1.04);
+
+  transition:
+    transform 4s cubic-bezier(.2,.7,.2,1);
+}
+
+.slide.active img {
+  transform: scale(1);
+}
+
+
+/* =========================================================
+   PHOTO CAPTION
+========================================================= */
+
+.photo-caption {
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: 30px;
+
+  padding: 15px 2px 0;
+
+  font-family: "DM Mono", monospace;
+
+  font-size: 8px;
+
+  letter-spacing: .12em;
+
+  text-transform: uppercase;
+
+  color: var(--dim);
+}
+
+
+/* =========================================================
+   RAILWAY AFTER DARK
+========================================================= */
+
+.railway-section {
+  width: 100%;
+  margin: -50px 0 0;
+  padding: 0 0 160px;
+}
+
+.railway-heading {
+  width: min(var(--max), 90vw);
+  margin: 0 auto 35px;
+}
+
+.railway-heading .section-number {
+  margin-bottom: 20px;
+}
+
+.railway-title {
+  font-size: clamp(48px, 9vw, 120px);
+  line-height: .82;
+  letter-spacing: -.07em;
+  font-weight: 500;
+}
+
+.railway-title em {
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.railway-card {
+  position: relative;
+
+  width: min(var(--max), 90vw);
+  min-height: 560px;
+
+  margin: 0 auto;
+
+  overflow: hidden;
+
+  border: 1px solid rgba(238,234,226,.14);
+
+  background: #080808;
+
+  box-shadow:
+    0 0 0 1px rgba(216,201,168,.025),
+    0 0 55px rgba(216,201,168,.06);
+
+  isolation: isolate;
+}
+
+.railway-image {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  object-position: center;
+
+  transform: scale(1.015);
+
+  transition:
+    transform 1.4s cubic-bezier(.2,.7,.2,1),
+    filter 1s ease;
+}
+
+.railway-card:hover .railway-image {
+  transform: scale(1.045);
+  filter: brightness(1.04);
+}
+
+.railway-overlay {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 1;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(13,13,12,.96) 0%,
+      rgba(13,13,12,.78) 28%,
+      rgba(13,13,12,.38) 55%,
+      rgba(13,13,12,.10) 100%
+    );
+}
+
+.railway-card::after {
+  content: "";
+
+  position: absolute;
+
+  z-index: 2;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      120deg,
+      transparent 25%,
+      rgba(216,201,168,.08) 50%,
+      transparent 75%
+    );
+
+  transform: translateX(-120%);
+
+  animation: railwayLightSweep 8s ease-in-out infinite;
+}
+
+.railway-info {
+  position: relative;
+
+  z-index: 3;
+
+  min-height: 560px;
+
+  padding: 36px 42px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: space-between;
+}
+
+.railway-top {
+  display: flex;
+
+  justify-content: space-between;
+
+  font-family: "DM Mono", monospace;
+
+  font-size: 9px;
+
+  letter-spacing: .25em;
+
+  text-transform: uppercase;
+
+  color: #aaa69e;
+}
+
+.railway-text {
+  max-width: 600px;
+}
+
+.railway-label {
+  margin-bottom: 14px;
+
+  font-family: "DM Mono", monospace;
+
+  font-size: 9px;
+
+  letter-spacing: .28em;
+
+  text-transform: uppercase;
+
+  color: #aaa69e;
+}
+
+.railway-text h2 {
+  margin-bottom: 22px;
+
+  font-family: "Playfair Display", serif;
+
+  font-size: clamp(52px, 8vw, 105px);
+
+  line-height: .84;
+
+  letter-spacing: -.055em;
+
+  font-weight: 400;
+}
+
+.railway-text h2 em {
+  font-weight: 400;
+}
+
+.railway-description {
+  max-width: 440px;
+
+  margin-bottom: 28px;
+
+  font-size: 14px;
+
+  line-height: 1.75;
+
+  color: rgba(238,234,226,.68);
+}
+
+.railway-button {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 22px;
+
+  padding: 13px 20px;
+
+  border: 1px solid rgba(238,234,226,.35);
+
+  font-family: "DM Mono", monospace;
+
+  font-size: 10px;
+
+  letter-spacing: .18em;
+
+  text-transform: uppercase;
+
+  transition:
+    background .35s ease,
+    border-color .35s ease,
+    transform .35s ease;
+}
+
+.railway-button:hover {
+  background: rgba(238,234,226,.08);
+
+  border-color: rgba(238,234,226,.7);
+
+  transform: translateY(-2px);
+}
+
+@keyframes railwayLightSweep {
+
+  0% {
+    transform: translateX(-120%);
+  }
+
+  55% {
+    transform: translateX(-120%);
+  }
+
+  75% {
+    transform: translateX(120%);
+  }
+
+  100% {
+    transform: translateX(120%);
+  }
+
+}
+
+@media (max-width: 700px) {
+
+  .railway-section {
+    margin-top: -20px;
+    padding-bottom: 100px;
+  }
+
+  .railway-heading {
+    margin-bottom: 25px;
+  }
+
+  .railway-title {
+    font-size: clamp(46px, 14vw, 70px);
+  }
+
+  .railway-card {
+    min-height: 560px;
+  }
+
+  .railway-image {
+    object-position: center;
+  }
+
+  .railway-overlay {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(13,13,12,.12) 0%,
+        rgba(13,13,12,.30) 30%,
+        rgba(13,13,12,.82) 65%,
+        rgba(13,13,12,.98) 100%
+      );
+  }
+
+  .railway-info {
+    min-height: 560px;
+    padding: 24px;
+  }
+
+  .railway-top {
+    font-size: 8px;
+  }
+
+  .railway-text h2 {
+    font-size: clamp(50px, 15vw, 72px);
+  }
+
+  .railway-description {
+    font-size: 13px;
+  }
+
+}
+
+
+/* =========================================================
+   CERTIFICATES
+========================================================= */
+
+.certificates {
+  padding: 160px 0;
+
+  border-top: 1px solid var(--line-soft);
+}
+
+.certificates-header {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: flex-end;
+
+  gap: 40px;
+
+  margin-bottom: 100px;
+}
+
+.certificates-description {
+  max-width: 300px;
+
+  color: var(--muted);
+
+  font-size: 11px;
+
+  line-height: 1.8;
+}
+
+.certificate-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 80px 40px;
+}
+
+.certificate {
+  position: relative;
+}
+
+.certificate-top {
+  display: flex;
+
+  justify-content: space-between;
+
+  margin-bottom: 15px;
+
+  font-family: "DM Mono", monospace;
+
+  font-size: 8px;
+
+  letter-spacing: .14em;
+
+  text-transform: uppercase;
+
+  color: var(--muted);
+}
+
+.certificate-frame {
+  position: relative;
+
+  padding: 9px;
+
+  background: #121211;
+
+  border: 1px solid var(--line);
+
+  overflow: hidden;
+}
+
+.certificate-frame::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  border: 1px solid transparent;
+
+  transition:
+    border-color .5s ease,
+    box-shadow .5s ease;
+}
+
+.certificate:hover .certificate-frame::after {
+  border-color: rgba(216,201,168,.28);
+
+  box-shadow:
+    inset 0 0 35px rgba(216,201,168,.035);
+}
+
+.certificate-frame img {
+  width: 100%;
+  height: auto;
+
+  transition:
+    transform .8s cubic-bezier(.2,.7,.2,1);
+}
+
+.certificate:hover .certificate-frame img {
+  transform: scale(1.012);
+}
+
+.certificate-name {
+  margin-top: 18px;
+
+  max-width: 90%;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+
+  color: #aaa69e;
+}
+
+@media (max-width: 800px) {
+
+  .certificate-grid {
+    grid-template-columns: 1fr;
+
+    gap: 65px;
+  }
+
+  .certificates-header {
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+
+}
+
+
+/* =========================================================
+   CINEMATIC FEATURE
+========================================================= */
+
+.feature {
+  padding: 100px 0 170px;
+}
+
+.feature-frame {
+  position: relative;
+
+  overflow: hidden;
+
+  border: 1px solid var(--line);
+
+  padding: 10px;
+
+  background: #111110;
+
+  transition:
+    border-color .5s ease,
+    box-shadow .5s ease;
+}
+
+.feature-frame:hover {
+  border-color: rgba(216,201,168,.35);
+
+  box-shadow:
+    0 0 45px rgba(216,201,168,.07);
+}
+
+.feature-image {
+  position: relative;
+
+  width: 100%;
+  min-height: 500px;
+
+  overflow: hidden;
+
+  background: #080808;
+}
+
+.feature-image img {
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  object-fit: contain;
+
+  transition:
+    transform 1.5s cubic-bezier(.2,.7,.2,1),
+    filter 1s ease;
+}
+
+.feature-frame:hover .feature-image img {
+  transform: scale(1.025);
+
+  filter: brightness(1.04);
+}
+
+.feature-overlay {
+  position: absolute;
+
+  inset: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: flex-end;
+
+  padding: 50px;
+
+  background:
+    linear-gradient(
+      to top,
+      rgba(0,0,0,.8),
+      rgba(0,0,0,.12) 65%,
+      transparent
+    );
+
+  p
